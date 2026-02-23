@@ -7,6 +7,7 @@
   font-weight: 400;
 
   color: #242424;
+  
   background-color: rgba(255, 255, 255, 0.87);
 
   font-synthesis: none;
@@ -29,4 +30,50 @@ main {
 }
 main:has(.back-link) {
   text-align: center;
+}
+
+.loader {
+  position: relative;
+  width: 15px;
+  height: 64px;
+}
+
+.loader::after,
+.loader::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: black;
+  background: currentColor;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  box-shadow: 45px 0, -45px 0;
+  animation: move 0.5s linear infinite alternate;
+}
+
+.loader::before {
+  top: 100%;
+  box-shadow: 50px 0;
+  left: -25px;
+  animation-direction: alternate-reverse;
+}
+
+@keyframes move {
+  0% {
+    top: 0
+  }
+
+  50% {
+    top: 50%
+  }
+
+  100% {
+    top: 100%
+  }
+}
+
+.hidden {
+  display: none;
 }
