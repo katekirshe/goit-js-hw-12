@@ -55,6 +55,7 @@ const onClickListener = async () => {
         }
         createGallery(data.hits);
 
+        if (page > 1) {
         const card = document.querySelector(".gallery-item");
         const cardHeight = card.getBoundingClientRect().height;
         window.scrollBy({
@@ -62,6 +63,7 @@ const onClickListener = async () => {
             top: cardHeight*2,
             behavior: "smooth"
         })
+        }
         
 
     } catch (e) {
