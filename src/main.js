@@ -5,6 +5,7 @@ import "izitoast/dist/css/iziToast.min.css";
 
 let userInputValue = "";
 let page = 1;
+const perPage = 15;
 const form = document.querySelector(".form");
 const loadMore = document.querySelector("#load-more")
 
@@ -33,7 +34,8 @@ const onClickListener = async () => {
     try {
         showLoader();
         hideLoadButton();
-        const data = await getImagesByQuery(userInputValue, page, 15);
+        const data = await getImagesByQuery(userInputValue, page, perPage)
+        
         if (!data.hits.length) {
             iziToast.error({
                 message: 'Sorry, there are no images matching your search query. Please try again!',
@@ -42,8 +44,26 @@ const onClickListener = async () => {
             hideLoadButton();
             return
         }
-        showLoadButton();
-        createGallery(data.hits)
+
+        if (!isLastPage(data.totalHits, page)) {
+            showLoadButton();
+        } else {
+            iziToast.info({
+                message: "We're sorry, but you've reached the end of search results.",
+                position: 'topRight'
+          });
+        }
+        createGallery(data.hits);
+
+        const card = document.querySelector(".gallery-item");
+        const cardHeight = card.getBoundingClientRect().height;
+        window.scrollBy({
+            left: 0,
+            top: cardHeight*2,
+            behavior: "smooth"
+        })
+        
+
     } catch (e) {
         console.log(e);
         iziToast.error({
@@ -51,7 +71,13 @@ const onClickListener = async () => {
             position: 'topRight'
         })
     } finally {
-       hideLoader();
-       showLoadButton();
+       hideLoader()
     }
 }
+
+function isLastPage(totalHits, page) {
+    if (totalHits <= (page * perPage)) {
+        return true
+    } return false
+}
+
