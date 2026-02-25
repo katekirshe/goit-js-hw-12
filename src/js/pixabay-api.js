@@ -26,7 +26,7 @@ export async function getImagesByQuery(query, page, perPage) {
       }; 
       return response.data;
     } catch (e) {
-        console.log(error);
+        console.log(e);
         iziToast.error({ 
             message: "API error.",
             position: 'topRight'

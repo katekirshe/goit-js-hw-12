@@ -20,7 +20,7 @@ form.addEventListener("submit", async (event) => {
         return 
     }
     clearGallery();
-
+    page = 1;
     await onClickListener();
     event.target.reset()
 }) 
